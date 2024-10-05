@@ -1,0 +1,169 @@
+/* 
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}  */
+  /*Убрать полосу прокрутки для всей страницы*/
+::-webkit-scrollbar {
+    width: 0;
+  }
+
+html, body {
+    min-height: 100vh; /* Минимальная высота равна 100vh */
+    background-color: hsl(0, 0%, 21%);
+    margin: 0; /* Удаляем стандартные отступы */
+    padding: 0;
+    overflow-x: hidden;
+}
+.upper{
+    padding-top: 15px;
+    display: flex;
+    margin-bottom: 25px;
+    justify-content: center;
+
+}
+.title-wrapper {
+    text-align: center;
+    position: relative; /* Чтобы позиционировать псевдоэлемент относительно заголовка */
+}
+.title {
+    color: white;
+    border: 2px solid white; /* Толщина, стиль и цвет рамки */
+    padding: 10px; /* Внутренний отступ, чтобы контент не примыкал к рамке */
+    border-radius: 25px; /* Закругление углов рамки (необязательно) */
+    display: inline-block;
+    overflow: hidden; /* Скрываем часть псевдоэлемента, выходящую за пределы */
+    position: relative; /* Чтобы псевдоэлемент позиционировался относительно этого элемента */
+}
+.title::before {
+    content: ""; /* Обязательно для псевдоэлемента */
+    position: absolute; /* Абсолютное позиционирование для накладки */
+    bottom: 100%; /* Начинаем ниже текста */
+    left: 0;
+    right: 0;
+    height: 100%; /* Занимаем всю высоту заголовка */
+    background-color: rgba(128, 128, 128, 0.5); /* Серый цвет с прозрачностью */
+    transition: bottom 0.3s ease; /* Плавный переход для эффекта */
+    z-index: -1; /* Помещаем за текстом */
+}
+
+.title:hover::before {
+    bottom: 0; /* Поднимаем цвет при наведении */
+}
+.container{
+    margin-top: -20px;
+}
+.columns{
+    align-items: flex-start;
+
+}
+.column-title{
+    color: white;
+    margin-bottom: -23px;
+}
+
+.column{
+    min-height: 20vh; /* Устанавливаем минимальную высоту */
+    border: 2px solid white; 
+    border-radius: 50px;
+}
+.column {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 300px; /* Минимальная ширина каждой колонки */
+    max-width: 100%; /* Чтобы колонка могла расширяться по контенту */
+    margin: 10px; /* Чтобы был отступ между колонками */
+}
+.task {
+    font-size: 18px; /* адайте нужный размер текста */
+    padding: 10px; /* Добавьте отступы для лучшего отображения */
+    border-radius: 20px;
+    border:black;
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Плавный переход */
+}
+.task:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Тень при наведении */
+}
+.custom-input{
+    border-radius: 15px;
+}
+.task-item{
+	position: relative;
+
+}
+/* Стили для крестика (удаления задачи) */
+.delete-task {
+    position: absolute; /* Устанавливает абсолютное позиционирование для крестика */
+    top: 28px; /* Расположение крестика от верхней границы контейнера */
+    right: 22px; /* Расположение крестика от левой границы контейнера */
+    width: 15px; /* Ширина крестика */
+    height: 15px; /* Высота крестика */
+    cursor: pointer; /* Меняет курсор на указатель при наведении на крестик */
+    display: none; /* Скрывает крестик по умолчанию */
+}
+/* Крестик с помощью псевдоэлементов */
+.task-item .delete-task::before,
+.task-item .delete-task::after {
+    content: ''; /* Позволяет создать пустой элемент */
+    position: absolute; /* Устанавливает абсолютное позиционирование для линий крестика */
+    width: 100%; /* Ширина линий крестика */
+    height: 2px; /* Высота линий крестика */
+    background-color: grey; /* Цвет линий крестика */
+    top: 50%; /* Центрирует линии по вертикали */
+    left: 0; /* Центрирует линии по горизонтали */
+    transform-origin: center; /* Центрирует точку вращения */
+}
+/* Первая линия крестика */
+.task-item .delete-task::before {
+    transform: rotate(45deg); /* Поворачивает линию на 45 градусов */
+}
+
+/* Вторая линия крестика */
+.task-item .delete-task::after {
+    transform: rotate(-45deg); /* Поворачивает линию на -45 градусов */
+}
+
+/* Показываем крестик при наведении на задачу */
+.task-item:hover .delete-task {
+    display: block; /* Показывает крестик, когда курсор наведён на задачу */
+}

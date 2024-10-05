@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <link rel="stylesheet" href="/dragndrop cards/styles.css">
+    <title>manager.</title>
+</head>
+<body>
+    <div class="upper">
+        <div class="title-wrapper">
+            <h1 class="hero has-text-centered title bordered">
+                manager.
+            </h1>
+        </div>
+    </div>
+    <div class="container">
+        <div class="columns is-desktop mt-3">
+            <div class="column column1" data-column="new">
+                <div class="has-text-centered">
+                    <h2 class="column-title is-size-4">Новые задачи</h2>
+                    <hr>
+                    <input class="custom-input input is-medium" type="text" placeholder="Введите задачу">
+                </div>
+                <div class="tasksNew mt-3">
+
+                </div>
+            </div>
+    
+            <div class="column column2" data-column="process">
+                <div class="has-text-centered">
+                    <h2 class="column-title is-size-4">В процессе</h2>
+                    <hr>
+                    <input class="custom-input input is-medium" type="text" placeholder="Введите задачу">
+                </div>
+                <div class="tasksProcess mt-3"></div>
+            </div>
+    
+            <div class="column column3" data-column="completed">
+                <div class="has-text-centered">
+                    <h2 class="column-title is-size-4">Завершенные</h2>
+                    <hr>
+                    <input class="custom-input input is-medium" type="text" placeholder="Введите задачу">
+                </div>
+                <div class="tasksCompleted mt-3"></div>
+            </div>
+        </div>
+    </div>
+    <script src="/dragndrop cards/script.js"></script>
+</body>
+</html>
