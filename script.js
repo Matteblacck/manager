@@ -4,8 +4,49 @@ const columns = {
     completed: document.querySelector(".tasksCompleted")
 };
 
+// Загрузка задач из localStorage при загрузке страницы
+document.addEventListener('DOMContentLoaded', loadTasks);
 
-//добавление задач
+// Функция для сохранения задач в localStorage
+function saveTasks() {
+    const tasks = {
+        new: [],
+        process: [],
+        completed: []
+    };
+
+    // Сохраняем задачи из каждой колонки
+    Object.keys(columns).forEach(columnType => {
+        const taskItems = columns[columnType].querySelectorAll('.task-item');
+        taskItems.forEach(taskItem => {
+            const taskText = taskItem.querySelector('.editable-task').innerText;
+            tasks[columnType].push(taskText);
+        });
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(tasks)); // Сохраняем задачи как JSON
+}
+
+// Функция для загрузки задач из localStorage
+function loadTasks() {
+    const tasksJSON = localStorage.getItem('tasks');
+    if (tasksJSON) {
+        const tasks = JSON.parse(tasksJSON);
+        Object.keys(tasks).forEach(columnType => {
+            tasks[columnType].forEach(taskText => {
+                let taskHTML = `<div class="task-item p-3" draggable="true">
+                                    <span class="delete-task"></span>
+                                    <span class="task box is-size-10 editable-task">${taskText}</span>
+                                </div>`;
+                columns[columnType].insertAdjacentHTML('beforeend', taskHTML);
+            });
+        });
+    }
+}
+
+
+
+// Добавление задач
 document.querySelectorAll('.custom-input').forEach(input => {
     input.addEventListener('keydown', function(event) {
         if (event.key === 'Enter') {
@@ -29,21 +70,22 @@ function addTask(event, input) {
         columns[columnType].insertAdjacentHTML('beforeend', taskHTML);
         
         input.value = ''; // Очищаем поле ввода
+
+        // Сохранение задачи в localStorage
+        saveTasks();
     }
 }
 
-
-//удаление задач
+// Удаление задач
 document.addEventListener("click", deleteTask);
 
-function deleteTask(event){
-    if (event.target.classList.contains('delete-task')){
+function deleteTask(event) {
+    if (event.target.classList.contains('delete-task')) {
         let taskItem = event.target.closest('.task-item');
         taskItem.remove();
-
+        saveTasks(); // Обновляем localStorage после удаления задачи
     }
 }
-
 
 // Редактирование задач
 document.addEventListener("click", editTask);
@@ -92,8 +134,8 @@ function finishEdit(input, taskTextElement) {
 
     // Заменяем input обратно на span
     input.replaceWith(taskTextElement);
+    saveTasks(); // Обновляем localStorage после редактирования
 }
-
 
 // Драг-н-дроп
 document.addEventListener("dragstart", handleDragStart);
@@ -126,6 +168,8 @@ function handleDrop(event) {
         columns[newColumnType].appendChild(dragTask);
         dragTask.classList.remove("dragging"); // Убираем визуальный эффект
         dragTask = null; // Сбрасываем переменную
+
+        saveTasks(); // Обновляем localStorage после перетаскивания
     }
 }
 
@@ -136,3 +180,4 @@ function handleDragEnd(event) {
         dragTask = null;
     }
 }
+
